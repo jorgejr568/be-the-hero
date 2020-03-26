@@ -37,7 +37,7 @@ module.exports = {
     async store(req, res){
         const data = req.body;
         data['ong_id'] = req.headers.authorization;
-        
+    
         const [incidentID] = await connection('incidents').insert(data);
     
         data['id'] = incidentID;
@@ -49,16 +49,14 @@ module.exports = {
     async delete(req, res){
         const { id } = req.params;
         const ong_id = req.headers.authorization;
-        
-        const query = connection('incidents').where('id', id).where('ong_id', ong_id);
 
-        const incident = await query.first();
+        const incident = await connection('incidents').where('id', id).where('ong_id', ong_id).first();
 
         if(!incident){
             return res.status(404).json({error: "Not found"});
         }
 
-        query.delete();
+        await connection('incidents').where('id', id).where('ong_id', ong_id).delete();
         
         res.status(204).send();
     }
