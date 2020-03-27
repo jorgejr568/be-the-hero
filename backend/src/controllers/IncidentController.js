@@ -10,7 +10,7 @@ module.exports = {
             .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
             .limit(5)
             .offset((page-1) * 5)
-            .select(['incidents.*','ongs.name as ong_name','ongs.email as ong_whatsapp','ongs.city as ong_city','ongs.uf as ong_uf']);
+            .select(['incidents.*','ongs.name as ong_name','ongs.email as ong_email','ongs.whatsapp as ong_whatsapp','ongs.city as ong_city','ongs.uf as ong_uf']);
 
 
         incidents = await incidents.map(incident => {
